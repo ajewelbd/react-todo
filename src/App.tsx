@@ -1,22 +1,19 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import NewTodoForm from "./NewTodoForm";
 
 export default function App() {
-	const [newItem, setNewItem] = useState("");
+	
 	const [todos, setTodos] = useState<Array<Todo>>([]);
 
 
-	function addItem(e: FormEvent) {
-		e.preventDefault();
-		if(newItem === "") return;
+	function addTodo(title: string) {
 		setTodos((currentTodos) => {
 			return [...currentTodos, {
 				id: crypto.randomUUID(),
-				title: newItem,
+				title,
 				completed: false
 			}]
 		})
-
-		setNewItem("")
 	}
 
 	function toggleTodo(id: string, completed: boolean) {
@@ -34,14 +31,7 @@ export default function App() {
 
 	return (
 		<>
-			<div>
-				<h1>ToDo's</h1>
-				<form onSubmit={addItem}>
-					<label htmlFor="title">Title</label>
-					<input type="text" name="title" id="title" value={newItem} onChange={(e) => setNewItem(e.target.value)} />
-					<button type="submit">Add</button>
-				</form>
-			</div>
+			<NewTodoForm onSubmit={addTodo}/>
 			<div className="todo-list">
 				<ul>
 					{todos.map((todo: Todo) => {
