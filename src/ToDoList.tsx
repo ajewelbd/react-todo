@@ -4,6 +4,7 @@ import ToDoItem from "./ToDoItem";
 export default function ToDoList({ todos, toggleTodo, deleteTodo }: props) {
     return (
         <div className="todo-list">
+            {!todos.length && <p>No Todos available!</p>}
             <ul>
                 {todos.map((todo: ToDo) => {
                     return (
